@@ -1,11 +1,10 @@
-import express from "express";
+import app from "./configs/app";
+import dotenv from 'dotenv';
 
-const app = express();
+dotenv.config();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const PORT = process.env.PORT as unknown as Number || 3000;
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
