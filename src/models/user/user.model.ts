@@ -11,31 +11,11 @@ const SALT_ROUNDS =
 const userSchema: Schema = new Schema(
   {
     id: Types.ObjectId,
-    name: { String, required: true },
-    phone: { String, required: true },
-    email: { String, required: true, unique: true },
-    password: { String, required: true },
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
     role: { type: String, enum: ["admin", "user"], default: "user" },
-    toDoList: [
-      {
-        name: String,
-        description: String,
-        type: { type: String, enum: ["easy", "middle", "hard"] },
-      },
-    ],
-    notes: [
-      {
-        title: String,
-        content: String,
-      },
-    ],
-    happitTracker: [
-      {
-        name: String,
-        days: Number,
-        hours: Number,
-      },
-    ],
   },
   { timestamps: true }
 );
@@ -43,7 +23,7 @@ const userSchema: Schema = new Schema(
 userSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) return next();
   try {
-    const salt = bcrypt.genSalt(SALT_ROUNDS) as unknown as string;
+    const salt = (await bcrypt.genSalt(10)) as unknown as string;
     const hashedPassword = await bcrypt.hash(this.password, salt);
     this.password = hashedPassword;
     next();
@@ -63,6 +43,6 @@ userSchema.methods.comparePassword = async function (
   }
 };
 
-const User = model("User", userSchema);
+const User = model("users", userSchema);
 
 export default User;

@@ -11,6 +11,7 @@ export const register = async (
 ) => {
   try {
     const { name, phone, email, password } = req.body;
+    const ifEmailEx = User;
     const accessToken = await userService.register(
       name,
       phone,
@@ -50,6 +51,7 @@ export const getByID = async (
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    return res.status(200).json({ message: "successfully", user });
   } catch (err) {
     next(err);
   }
@@ -148,6 +150,34 @@ export const updateRole = async (
     next(err);
   }
 };
+
+// update password
+export const updatePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
+
+// email verification
+export const emailVerification = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
+
+// forgot password
+export const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
+
+// reset password
+export const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
 
 export default {
   register,

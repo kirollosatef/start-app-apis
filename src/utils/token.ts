@@ -5,7 +5,10 @@ import IToken from "./interfaces/token.interface";
 const JWT_SECRET = process.env.JWT_SECRET as jwt.Secret;
 
 export const createToken = (user: IUser): string => {
-  return jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
+  return jwt.sign({ id: user._id }, JWT_SECRET, {
+    algorithm: "HS256",
+    expiresIn: "1h",
+  });
 };
 
 export const verifyToken = async (

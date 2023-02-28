@@ -32,14 +32,16 @@ const authenticateToken = async (
     if (payload instanceof jwt.JsonWebTokenError) {
       return res.status(401).json({ message: "Unauthorized", err: payload });
     }
-    const user = await User.findById(payload.id).select("-password").exec();
-    let userObject: IUser = user as IUser;
+    const user = (await User.findById(payload.id)
+      .select("-password")
+      .exec()) as IUser;
     if (!user) {
       return res
         .status(401)
         .json({ message: "Unauthorized", err: "User not found" });
     }
-    req.user = userObject;
+    req.user = user;
+    console.log("hi");
     return next();
   } catch (err) {
     return res.status(401).json({ message: "Unauthorized", err });

@@ -7,26 +7,6 @@ interface IUser extends Document {
   email: string;
   password: string;
   role: string;
-  toDoList: [
-    {
-      name: string;
-      description: string;
-      type: string;
-    }
-  ];
-  notes: [
-    {
-      title: string;
-      content: string;
-    }
-  ];
-  happitTracker: [
-    {
-      name: string;
-      days: number;
-      hours: number;
-    }
-  ];
   comparePassword: (password: string) => Promise<boolean>;
 }
 
