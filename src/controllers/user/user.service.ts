@@ -1,6 +1,7 @@
 import User from "./../../models/user/user.model";
 import token from "../../utils/token";
 import IUser from "./../../models/user/user.interface";
+import { createUserData } from "../data/data.controller";
 
 export const register = async (
   name: string,
@@ -16,7 +17,7 @@ export const register = async (
     role: "user",
   })) as IUser;
   const accessToken = token.createToken(user);
-  return accessToken + " " + user;
+  return {accessToken: accessToken, userId: user.id};
 };
 
 export const login = async (

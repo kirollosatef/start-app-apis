@@ -16,6 +16,7 @@ const userSchema: Schema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "user"], default: "user" },
+    data: { type: Types.ObjectId, ref: "data" },
   },
   { timestamps: true }
 );
