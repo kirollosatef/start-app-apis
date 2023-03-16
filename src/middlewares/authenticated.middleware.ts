@@ -41,7 +41,6 @@ const authenticateToken = async (
         .json({ message: "Unauthorized", err: "User not found" });
     }
     req.user = user;
-    console.log("hi");
     return next();
   } catch (err) {
     return res.status(401).json({ message: "Unauthorized", err });

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import userService from "./user.service";
 import User from "../../models/user/user.model";
 import IUser from "../../models/user/user.interface";
+import { createUserData } from "../data/data.controller";
 
 // register user
 export const register = async (
@@ -18,7 +19,8 @@ export const register = async (
       email,
       password
     );
-    return res.json({ message: "User created successfully", accessToken });
+    await createUserData(accessToken.userId, next);
+    return res.json({ message: "User created successfully", accesstoken: accessToken.accessToken });
   } catch (err) {
     next(err);
   }
